@@ -38,6 +38,11 @@ Para executar o script, primeiro você deve realizar o download do script para s
 
 ## Usando o CRON para realizar o agendamento da execução do Script
 
+## BONUS:
+
+ec2.terminate destroi sua instância, dando release no IP elástico, deletando os security groups e terminando a instância.
+Esse script foi criado após inúmeras instâncias deletadas via Navegador Web e uma solução automatizada se fez necessária. Basta alimentar o script no campo `INSTANCE_ID` com o ID da sua instância
+
 
 
 
