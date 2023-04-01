@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -x
+
 # Define o ID da Instância para ser excluida
-INSTANCE_ID=<your-instance-id>
+INSTANCE_ID=<your-instance-id>$1
 
 # Pega o ID dos Security Groups associados
 SG_IDS=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[].Instances[].SecurityGroups[].GroupId' --output text)

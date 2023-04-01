@@ -1,9 +1,13 @@
 #!/bin/bash
 
+set -x
+
 # Definir variáveis
-INSTANCE_ID="i-02d03d4e5656e7b7a"
-PATH_TO_KEY_PAIR="caminho/para/chave.pem"
-PUBLIC_IP="x.x.x.x"
+INSTANCE_ID=$1
+PATH_TO_KEY_PAIR=$2
+
+# Retorna Endereço de IP Público
+PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
 
 # Recuperar a chave pública para a instância
 aws ec2 get-console-output --instance-id $INSTANCE_ID | grep 'Public key:' | cut -d ':' -f 2

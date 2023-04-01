@@ -1,15 +1,17 @@
 #!/bin/bash
 
+set -x
+
 # Definição de Variáveis
 REGION=us-east-1
 AMI=ami-0c94855ba95c71c99 # Amazon Linux 2 AMI
 INSTANCE_TYPE=t3.small
 VOLUME_TYPE=gp3
 VOLUME_SIZE=16
-VPC_NAME="Compass Univesp Uri"
-SECURITY_GROUP_NAME="Compass Univesp Uri"
-KEY_NAME="PB Compass Univesp"
-INSTANCE_NAME="PB UNIVEST URI"
+VPC_NAME="CompassAWS"
+SECURITY_GROUP_NAME="CompassAWS"
+KEY_NAME="compassEC2key"
+INSTANCE_NAME="CompassAWS"
 COST_CENTER="C092000004"
 PROJECT_NAME="PB UNIVEST URI"
 
