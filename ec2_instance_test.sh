@@ -18,8 +18,11 @@ ssh -i $PATH_TO_KEY_PAIR ec2-user@$PUBLIC_IP "uname -a"
 # Verificar o IP elástico
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[].Instances[].PublicIpAddress"
 
+# Retorna ID da VPC
+aws ec2 describe-vpcs --filters "Name=tag:Name,Values=CompassAWS" --query "Vpcs[0].VpcId"
+
 # Verificar quais portas estão abertas
-aws ec2 describe-security-groups --group-names "Compass Univesp Uri" --query "SecurityGroups[].IpPermissions[]"
+aws ec2 describe-security-groups --filters Name=vpc-id,Values=vpc-09ad72f7c98e62ebb --query "SecurityGroups[].IpPermissions[]"
 
 # Verificar o tipo de instância e os volumes associados
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[].Instances[].{InstanceType: InstanceType, Volumes: BlockDeviceMappings[].Ebs.VolumeId}"
