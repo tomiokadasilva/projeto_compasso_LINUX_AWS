@@ -4,6 +4,7 @@ set -x
 
 # Definição de Variáveis
 REGION=us-east-1
+AVAILABILITY_ZONE=us-east-1a
 AMI=ami-0c94855ba95c71c99 # Amazon Linux 2 AMI
 INSTANCE_TYPE=t3.small
 VOLUME_TYPE=gp3
@@ -20,7 +21,7 @@ VPC_ID=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query 'Vpc.VpcId' --outpu
 aws ec2 create-tags --resources $VPC_ID --tags Key=Name,Value="$VPC_NAME" --region $REGION
 
 # Cria Sub-rede
-SUBNET_ID=$(aws ec2 create-subnet --vpc-id $VPC_ID --cidr-block 10.0.0.0/24 --query 'Subnet.SubnetId' --output text --region $REGION)
+SUBNET_ID=$(aws ec2 create-subnet --vpc-id $VPC_ID --cidr-block 10.0.0.0/24 --availability-zone ${AVAILABILITY_ZONE} --query 'Subnet.SubnetId' --output text --region $REGION)
 
 # Cria Gateway de Internet
 IGW_ID=$(aws ec2 create-internet-gateway --query 'InternetGateway.InternetGatewayId' --output text --region $REGION)
@@ -52,7 +53,7 @@ aws ec2 create-key-pair --key-name "$KEY_NAME" --query 'KeyMaterial' --output te
 chmod 400 "$KEY_NAME.pem"
 
 # Inicia a Instância EC2
-INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI --count 1 --instance-type $INSTANCE_TYPE --key-name "$KEY_NAME" --security-group-ids $SECURITY_GROUP_ID --subnet-id $SUBNET_ID --block-device-mappings "[{\"DeviceName\":\"/dev/xvda\",\"Ebs\":{\"VolumeSize\":$VOLUME_SIZE,\"DeleteOnTermination\":true}}]" --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_NAME},{Key=CostCenter,Value=$COST_CENTER},{Key=Project,Value=$PROJECT_NAME},{Key=ResourceType,Value=instance}]" --output text --region $REGION --query 'Instances[0].InstanceId')
+INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI --count 1 --instance-type $INSTANCE_TYPE --key-name "$KEY_NAME" --security-group-ids $SECURITY_GROUP_ID --subnet-id $SUBNET_ID --block-device-mappings "[{\"DeviceName\":\"/dev/xvda\",\"Ebs\":{\"VolumeSize\":$VOLUME_SIZE,\"DeleteOnTermination\":true}}]" --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_NAME},{Key=CostCenter,Value=$COST_CENTER},{Key=Project,Value=$PROJECT_NAME},{Key=ResourceType,Value=instance}]" --output text --region $REGION --placement AvailabilityZone=$AVAILABILITY_ZONE --query 'Instances[0].InstanceId')
 
 # Aguarde a instância estar rodando
 aws ec2 wait instance-running --instance-ids $INSTANCE_ID --region $REGION
@@ -66,7 +67,7 @@ PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --region $REG
 echo "EC2 instance with ID $INSTANCE_ID and Public IP $PUBLIC_IP has been launched in the $REGION region."
 
 # Cria um volume EBS
-VOLUME_ID=$(aws ec2 create-volume --size $VOLUME_SIZE --availability-zone ${REGION}a --volume-type $VOLUME_TYPE --query 'VolumeId' --output text --region $REGION)
+VOLUME_ID=$(aws ec2 create-volume --size $VOLUME_SIZE --availability-zone ${AVAILABILITY_ZONE} --volume-type $VOLUME_TYPE --query 'VolumeId' --output text --region $REGION)
 aws ec2 wait volume-available --volume-ids $VOLUME_ID --region $REGION
 
 # Anexar um Volume EBS à instância
