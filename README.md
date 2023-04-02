@@ -28,11 +28,11 @@ Um novo grupo de segurança denominado `Compass Univesp Uri` é criado e regras 
 7. Depois que o script for concluído, você deverá ver o ID da instância e o endereço IP público impressos no console. Você pode usar essas informações para acessar a instância.
 
 ## Testando sua instância
-Após a criação da instância, você pode testar se ela está disponível usando o script `ec2_instance_test.sh`. 
+Após a criação da instância, você pode testar se ela está disponível executando o script `ec2_instance_test.sh`. 
 
 > NOTA: Esse script aceita dois argumentos, seu `INSTANCE_ID` e seu `PATH_TO_KEY_PAIR`
 
-Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comando `./ec2_instance_test.sh.` para visualizar o teste em console
+Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comandoScript `ec2_instance_test.sh.` para visualizar o teste em console
 
 ## Liberando portas 22,88,443, 111/TCP e UDP e 2049/TCP e UDP
 
@@ -57,7 +57,7 @@ Você pode acessar o arquivo de configuração através do comando `crontab -e` 
 
 O formato que deve ser usado é o seguinte:
 ```
-*     *     *     *     *  Comando a ser xecutado
+*     *     *     *     *  Comando a ser Executado
 -     -     -     -     -
 |     |     |     |     |
 |     |     |     |     +----- Dia da Semana (0 - 6) (Domingo é 0)
