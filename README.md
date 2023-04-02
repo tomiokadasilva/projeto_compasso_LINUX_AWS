@@ -34,9 +34,29 @@ Após a criação da instância, você pode testar se ela está disponível exec
 
 Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comandoScript `ec2_instance_test.sh.` para visualizar o teste em console
 
-## Liberando portas 22,88,443, 111/TCP e UDP e 2049/TCP e UDP
-
 ## Criando um NFS com AWS EFS
+Para criar um sistema de arquivos EFS na AWS, siga os seguintes passos:
+
+1. Acesse o Console de Gerenciamento da AWS e Selecione o serviço Amazon EFS.
+2. Clique em `Criar sistema de arquivos` e Selecione as opções desejadas para configuração do EFS, incluindo a região da AWS onde será criado.
+3. Clique em `Criar sistema de arquivos`
+
+Para montar o sistema de arquivos EFS em um servidor NFS por IP, siga os seguintes passos:
+
+1. Acesse a instância do servidor NFS por SSH.
+2. Instale o pacote `amazon-efs-utils` executando o comando `sudo yum install amazon-efs-utils` (no Amazon Linux).
+3. Crie o ponto de montagem executando o comando `sudo mkdir /mnt/efs`.
+4. Monte o sistema de arquivos EFS executando o comando `sudo mount -t efs <ID_DO_FILE_SYSTEM>:/ /mnt/efs`, onde `<ID_DO_FILE_SYSTEM>` é o ID do sistema de arquivos EFS que você criou.
+5. Verifique se o EFS foi montado corretamente executando o comando `df -h` e verificando se o ponto de montagem `/mnt/efs` está listado.
+
+> DICA: É possível fazer o sistema de arquivos EFS montar automaticamente durante o boot do servidor NFS, para isso, siga os passos à seguir:
+>1. Acesse a instância do servidor NFS por SSH.
+>2. Abra o arquivo `/etc/fstab` para edição executando o comando `sudo nano /etc/fstab`.
+>3. Adicione a seguinte linha no final do arquivo: `<ID_DO_FILE_SYSTEM>:/ /mnt/efs efs defaults,_netdev 0 0` e Substitua "<ID_DO_FILE_SYSTEM>" pelo ID do seu sistema de arquivos EFS.
+>4. Salve as alterações e feche o arquivo "/etc/fstab".
+>5. Execute o comando "sudo mount -a" para testar se o EFS foi montado corretamente.
+>6. Reinicie o servidor NFS com `sudo reboot` para testar se o EFS será montado automaticamente durante o boot.
+>7. Após esses passos, o sistema de arquivos EFS deverá ser montado automaticamente durante o boot do servidor NFS.
 
 ## Monitoramento do servidor Apache
 
