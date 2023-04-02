@@ -4,13 +4,13 @@
 Através do uso da AWS CLI é possível automatizar a criação da instância executando um script. 
 
 Neste exemplo, o script provisiona uma instância com as seguintes características:
-
+```
 Amazon EC2 
 Sistema Operacional: `Amazon Linux 2`
 Região: `us-east-1` 
 Familia: `t3.small`
 Volume: `SSD 16GB`
-
+```
 Também, esse script irá anexar Alocar e anexar um IP elástico à instância, abrir portas de comunicação para acesso público, criar uma nova subnet, internet gateway e VPC.
 
 Um novo grupo de segurança denominado `Compass Univesp Uri` é criado e regras são adicionadas para autorizar o tráfego nas portas `22, 80, 443, 111/TCP e UDP e 2049/TCP e UDP`. Um novo par de chaves denominado PB Compass Univesp também é criado para acesso à instância. Finalmente, tags são adicionadas à instância para identificar sua finalidade, centro de custo, projeto e tipo de recurso.
@@ -28,7 +28,9 @@ Um novo grupo de segurança denominado `Compass Univesp Uri` é criado e regras 
 7. Depois que o script for concluído, você deverá ver o ID da instância e o endereço IP público impressos no console. Você pode usar essas informações para acessar a instância.
 
 ## Testando sua instância
-Após a criação da instância, você pode testar se ela está disponível usando o script `ec2_instance_test.sh`. Certifique-se de substituir os valores de INSTANCE_ID, PATH_TO_KEY_PAIR e PUBLIC_IP pelos valores apropriados para a sua instância.
+Após a criação da instância, você pode testar se ela está disponível usando o script `ec2_instance_test.sh`. 
+
+> NOTA: Esse script aceita dois argumentos, seu `INSTANCE_ID` e seu `PATH_TO_KEY_PAIR`
 
 Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comando `./ec2_instance_test.sh.` para visualizar o teste em console
 
