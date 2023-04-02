@@ -32,25 +32,46 @@ Após a criação da instância, você pode testar se ela está disponível usan
 
 Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comando `./ec2_instance_test.sh.` para visualizar o teste em console
 
+## Liberando portas 22,88,443, 111/TCP e UDP e 2049/TCP e UDP
+
 ## Criando um NFS com AWS EFS
 
 ## Monitoramento do servidor Apache
 
-## Usando o CRON para realizar o agendamento da execução do Script
+1. Certifique-se de que o apache está instalado e executando no seu servidor `sudo systemctl status httpd`
 
-## BONUS:
+NOTA: Caso o Apache não esteja sendo executado, você pode rodar o comando `sudo systemctl start httpd`
 
-ec2.terminate destroi sua instância, dando release no IP elástico, deletando os security groups e terminando a instância.
-Esse script foi criado após inúmeras instâncias deletadas via Navegador Web e uma solução automatizada se fez necessária. Basta alimentar o script no campo `INSTANCE_ID` com o ID da sua instância
+Uma vez que o servidor Apache estiver sendo executado, você pode acessá-lo usando o endereço de IP ou Domínio do servidor, no seu Navegador web. Por exemplo, se o IP do seu servidor for 192.168.0.1 você digitaria `http://192.168.0.1`
+Caso você não saiba seu endereço de IP Público você pode digitar no console `curl ifconfig.me`
+
+2. Você irá executar o script `check_apache.sh`
+
+NOTA: Lembre-se de tornar o script executável utilizando o comando `chmod +x check_apache.sh`
+
+## Usando o CRON para automatizar a execução do Script
+
+Você pode acessar o arquivo de configuração através do comando `crontab -e` dentro desse arquivo, definir o tempo que você deseja que o script seja executado e o caminho do script
+
+O formato que deve ser usado é o seguinte:
+`
+*     *     *     *     *  Comando a ser xecutado
+-     -     -     -     -
+|     |     |     |     |
+|     |     |     |     +----- Dia da Semana (0 - 6) (Domingo é 0)
+|     |     |     +------- Mês (1 - 12)
+|     |     +--------- Dia do Mês (1 - 31)
+|     +----------- Hora (0 - 23)
++------------- Minuto (0 - 59)
+`
+Por exemplo, para a execução do script `check_apache.sh`:
+
+`*/5 * * * * /home/user/check_apache.sh`
+
+`onde */5 * * * * /` define a execução do script para cada 5 minutos e `/home/user/check_apache.sh` define o caminho para a execução do seu script.
 
 
-
-
-
-
-
-
-
+NOTA: Lembre-se de dar ao CRON as permissões necessárias para acessar o arquivo que será executado. Por exemplo, caso o arquivo esteja dentro de um NFS montado.
 
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
