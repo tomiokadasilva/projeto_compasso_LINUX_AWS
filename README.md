@@ -47,14 +47,14 @@ Caso você não saiba seu endereço de IP Público você pode digitar no console
 
 2. Você irá executar o script `check_apache.sh`
 
-NOTA: Lembre-se de tornar o script executável utilizando o comando `chmod +x check_apache.sh`
+> NOTA: Lembre-se de tornar o script executável utilizando o comando `chmod +x check_apache.sh`
 
 ## Usando o CRON para automatizar a execução do Script
 
 Você pode acessar o arquivo de configuração através do comando `crontab -e` dentro desse arquivo, definir o tempo que você deseja que o script seja executado e o caminho do script
 
 O formato que deve ser usado é o seguinte:
-`
+```
 *     *     *     *     *  Comando a ser xecutado
 -     -     -     -     -
 |     |     |     |     |
@@ -63,7 +63,7 @@ O formato que deve ser usado é o seguinte:
 |     |     +--------- Dia do Mês (1 - 31)
 |     +----------- Hora (0 - 23)
 +------------- Minuto (0 - 59)
-`
+```
 Por exemplo, para a execução do script `check_apache.sh`:
 
 `*/5 * * * * /home/user/check_apache.sh`
@@ -71,7 +71,7 @@ Por exemplo, para a execução do script `check_apache.sh`:
 `onde */5 * * * * /` define a execução do script para cada 5 minutos e `/home/user/check_apache.sh` define o caminho para a execução do seu script.
 
 
-NOTA: Lembre-se de dar ao CRON as permissões necessárias para acessar o arquivo que será executado. Por exemplo, caso o arquivo esteja dentro de um NFS montado.
+> NOTA: Lembre-se de dar ao CRON as permissões necessárias para acessar o arquivo que será executado. Por exemplo, caso o arquivo esteja dentro de um NFS montado.
 
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
