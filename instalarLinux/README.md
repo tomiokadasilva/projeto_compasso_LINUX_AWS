@@ -1,8 +1,8 @@
-#Guia passo a passo de como instalar o Oracle Linux no VirtualBox
+# Guia passo a passo de como instalar o Oracle Linux no VirtualBox
 
-##Siga as instruções passo a passo abaixo para instalar o Oracle Linux versão 8.7 no VirtualBox, com uma alocação de espaço em disco de 30GB, 2GB de RAM, 1 núcleo de processador e uma configuração de adaptador de ponte sem GUI:
+Siga as instruções passo a passo abaixo para instalar o Oracle Linux versão 8.7 no VirtualBox, com uma alocação de espaço em disco de 30GB, 2GB de RAM, 1 núcleo de processador e uma configuração de adaptador de ponte sem GUI:
 
-###Download da Imagem
+### Download da Imagem
 Baixe a imagem ISO do Oracle Linux neste link: `https://www.oracle.com/linux/technologies/oracle-linux-downloads.html`
 
 ### Criando sua Máquina Virtual
@@ -37,35 +37,43 @@ Baixe a imagem ISO do Oracle Linux neste link: `https://www.oracle.com/linux/tec
 12. Quando a instalação estiver concluída, clique em "Reiniciar". Após reiniciar, faça login no console.
 
 ### Seus primeiros comandos no Linux
-1. Abra o terminal e digite o seguinte comando para configurar a interface de rede:
-`
+1. Abra o terminal e digite o seguinte comando para configurar a interface de rede: 
+```
 sudo nmcli connection modify <interface-name> bridge.br0
 sudo nmcli connection up <interface-name>
-`
+```
 > (Substitua "<interface-name>" pelo nome de sua interface Ethernet)
 
-Para configurar o adaptador bridge, abra o arquivo de configuração de rede:
-`sudo vi /etc/sysconfig/network-scripts/ifcfg-<interface-name>`
+2. Para configurar o adaptador bridge, abra o arquivo de configuração de rede:
+
+` sudo vi /etc/sysconfig/network-scripts/ifcfg-<interface-name> `
+
 > (Substitua "<interface-name>" pelo nome de sua interface Ethernet)
-Adicione as seguintes linhas ao final do arquivo para configurar a interface de ponte:
+
+3. Adicione as seguintes linhas ao final do arquivo para configurar a interface de ponte:
+
 `
   BRIDGE=br0
   NM_CONTROLLED="no"
 `
-Salve e saia do arquivo.
+
+4. Salve e saia do arquivo.
 > `:` `wq` `Enter`
+
 Em seguida, configure o arquivo de configuração do adaptador de ponte:
+
   `sudo vi /etc/sysconfig/network-scripts/ifcfg-br0`
 
-Adicione as seguintes linhas ao final do arquivo para configurar a ponte:
+5. Adicione as seguintes linhas ao final do arquivo para configurar a ponte:
+
 `DEVICE=br0
 TYPE=Bridge
 BOOTPROTO=dhcp
 ONBOOT=yes`
 
-Salve e saia do arquivo.
+6. Salve e saia do arquivo.
 > `:` `wq` `Enter`
-Reinicie a interface de rede com o seguinte comando:
+7. Reinicie a interface de rede com o seguinte comando:
 
 `sudo systemctl restart NetworkManager`
 
