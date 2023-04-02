@@ -42,7 +42,7 @@ Para executar o script, primeiro você deve realizar o download do script para s
 
 1. Certifique-se de que o apache está instalado e executando no seu servidor `sudo systemctl status httpd`
 
-NOTA: Caso o Apache não esteja sendo executado, você pode rodar o comando `sudo systemctl start httpd`
+> NOTA: Caso o Apache não esteja sendo executado, você pode rodar o comando `sudo systemctl start httpd`
 
 Uma vez que o servidor Apache estiver sendo executado, você pode acessá-lo usando o endereço de IP ou Domínio do servidor, no seu Navegador web. Por exemplo, se o IP do seu servidor for 192.168.0.1 você digitaria `http://192.168.0.1`
 Caso você não saiba seu endereço de IP Público você pode digitar no console `curl ifconfig.me`
