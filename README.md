@@ -90,7 +90,7 @@ Por exemplo, para a execução do script `check_apache.sh`:
 
 `*/5 * * * * /home/user/check_apache.sh`
 
-`onde */5 * * * * /` define a execução do script para cada 5 minutos e `/home/user/check_apache.sh` define o caminho para a execução do seu script.
+onde `*/5 * * * * /` define a execução do script para cada 5 minutos e `/home/user/check_apache.sh` define o caminho para a execução do seu script.
 
 
 > NOTA: Lembre-se de dar ao CRON as permissões necessárias para acessar o arquivo que será executado. Por exemplo, caso o arquivo esteja dentro de um NFS montado.
