@@ -1,6 +1,6 @@
 # Guia passo a passo de como instalar o Oracle Linux no VirtualBox
 
-Siga as instruções passo a passo abaixo para instalar o Oracle Linux versão 8.7 no VirtualBox, com uma alocação de espaço em disco de 30GB, 2GB de RAM, 1 núcleo de processador e uma configuração de adaptador de ponte sem GUI:
+Siga as instruções passo a passo abaixo para instalar o Oracle Linux versão 8.7 no VirtualBox, com uma alocação de espaço em disco de 30GB, 2GB de RAM, 1 núcleo de processador e sem GUI:
 
 ### Download da Imagem
 Baixe a imagem ISO do Oracle Linux neste link: `https://www.oracle.com/linux/technologies/oracle-linux-downloads.html`
@@ -36,45 +36,5 @@ Baixe a imagem ISO do Oracle Linux neste link: `https://www.oracle.com/linux/tec
 11. Clique em "Iniciar instalação".
 12. Quando a instalação estiver concluída, clique em "Reiniciar". Após reiniciar, faça login no console.
 
-### Seus primeiros comandos no Linux
-1. Abra o terminal e digite o seguinte comando para configurar a interface de rede: 
-```
-sudo nmcli connection modify <interface-name> bridge.br0
-sudo nmcli connection up <interface-name>
-```
-> (Substitua "<interface-name>" pelo nome de sua interface Ethernet)
 
-2. Para configurar o adaptador bridge, abra o arquivo de configuração de rede:
-
-` sudo vi /etc/sysconfig/network-scripts/ifcfg-<interface-name> `
-
-> (Substitua "<interface-name>" pelo nome de sua interface Ethernet)
-
-3. Adicione as seguintes linhas ao final do arquivo para configurar a interface de ponte:
-
-`
-  BRIDGE=br0
-  NM_CONTROLLED="no"
-`
-
-4. Salve e saia do arquivo.
-> `:` `wq` `Enter`
-
-Em seguida, configure o arquivo de configuração do adaptador de ponte:
-
-  `sudo vi /etc/sysconfig/network-scripts/ifcfg-br0`
-
-5. Adicione as seguintes linhas ao final do arquivo para configurar a ponte:
-
-`DEVICE=br0
-TYPE=Bridge
-BOOTPROTO=dhcp
-ONBOOT=yes`
-
-6. Salve e saia do arquivo.
-> `:` `wq` `Enter`
-7. Reinicie a interface de rede com o seguinte comando:
-
-`sudo systemctl restart NetworkManager`
-
-Seu Oracle Linux agora está instalado no VirtualBox com um adaptador de ponte configurado. Parabéns!
+Seu Oracle Linux agora está instalado no VirtualBox. Parabéns!
