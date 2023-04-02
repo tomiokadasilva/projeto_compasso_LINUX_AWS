@@ -73,7 +73,7 @@ Caso você não saiba seu endereço de IP Público você pode digitar no console
 
 ## Usando o CRON para automatizar a execução do Script
 
-Você pode acessar o arquivo de configuração através do comando `crontab -e` dentro desse arquivo, definir o tempo que você deseja que o script seja executado e o caminho do script
+Você pode acessar o arquivo de configuração do Cron através do comando `crontab -e`. E, dentro desse arquivo, você pode definir o tempo que você deseja que o script seja executado e o caminho do script
 
 O formato que deve ser usado é o seguinte:
 ```
