@@ -122,7 +122,7 @@ Nmap done: 1 IP address (1 host up) scanned in 4.65 seconds
 > A porta 443 está aberta pois é usada pelo serviço httpd (Apache) para servir arquivos no protocolo HTTPS \
 > A porta 2049 está aberta pois é usada para o tráfego do protocolo NFS em redes TCP/IP. Quando o EFS solicita o acesso ao NFS ela é usada.
 
-Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o `comando df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou a porta ao documento de configuração do apache `httpd.conf`
+Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o comando `df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou a porta ao documento de configuração do apache `httpd.conf`
 
 Você pode acessar o arquivo de configuração do apache executando o comando
 
