@@ -95,6 +95,33 @@ onde `*/5 * * * * /` define a execução do script para cada 5 minutos e `/home/
 
 > NOTA: Lembre-se de dar ao CRON as permissões necessárias para acessar o arquivo que será executado. Por exemplo, caso o arquivo esteja dentro de um NFS montado.
 
+## Certificando-se de que as portas 22, 80, 111, 443 e 2049 estão abertas
+1. Certifique-se de que você possui o comando nmap instalado com o comando `nmap --version`
+> Caso não tenha o nmap instalado, execute o comando `sudo yum install nmap` para realizar o download e instalação do pacote.
+
+2. Realize o comando `nmap` no seu IP público. Por exemplo `nmap 192.168.0.1`
+Este comando irá retornar as portas disponíveis no seu ip, o estado delas e o serviço que estão utilizando. Se tudo foi configurado corretamente, você deverá ver uma saída parecida com a abaixo:
+
+```
+Starting Nmap 6.40 ( http:nmap.org) at 2023-04-03 12:22 -03
+Nmap scan report for ec2-IP-Público.compute-1.amazonaws.com (IP Público)
+Host is up (0.00056s latency).
+Not shown: 995 filtered ports
+PORT      STATE SERVICE
+22/TCP    open  ssh
+80/TCP    open  http
+111/TCP   open  rpcbind
+443/TCP   open  https
+2049/TCP  open  nfs
+
+Nmap done: 1 IP address (1 host up) scanned in 4.65 seconds
+```
+> A porta 22 está aberta pois o serviço openSSH está sendo usado para o acesso à instância
+> A porta 80 está aberta pois o serviço httpd (Apache) está sendo usado para servir arquivos no protocolo HTTP
+> A porta 111 está aberta pois ela é usada para Remote Procedure Call (RPC) no Network File system (NFS).
+> A porta 443 está aberta pois é usada pelo serviço httpd (Apache) para servir arquivos no protocolo HTTPS
+> A porta 2049 está aberta pois é usada para o tráfego do protocolo NFS em redes TCP/IP. Quando o EFS solicita o acesso ao NFS ela é usada.
+
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
 
