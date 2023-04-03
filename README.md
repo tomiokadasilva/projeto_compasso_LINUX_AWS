@@ -177,6 +177,34 @@ Isso deve exibir uma lista das regras atuais do firewall, que incluirá a config
 
 ## Certificado SSL
 
+1. Ative o TLS no servidor
+
+`$ sudo systemctl is-enabled httpd`
+
+>> Se o valor retornado não for "enabled", inicie o Apache e configure-o para iniciar sempre que o sistema for iniciado.
+
+`$ sudo systemctl start httpd && sudo systemctl enable httpd`
+
+2. Execute o seguinte comando para configurar o seu servidor seguro e criar um certificado
+
+`$ sudo yum install -y mod_ssl`
+
+3. Agora Execute o script para gerar um certificado e chave dummy autoassinados para testes.
+
+```
+$ cd /etc/pki/tls/certs
+sudo ./make-dummy-cert localhost.crt
+```
+
+4. Abra o arquivo `/etc/httpd/conf.d/ssl.conf` usando o seu editor de texto favorito (como vim ou nano) como usuário root e comente a seguinte linha, porque o certificado falso autoassinado também contém a chave. Se você não comentar esta linha antes de concluir a próxima etapa, o serviço Apache não iniciará.
+
+`SSLCertificateKeyFile /etc/pki/tls/private/localhost.key`
+
+5. Reinicie o Apache.
+`$ sudo systemctl restart httpd`
+
+6. Seu servidor web Apache agora deve suportar HTTPS (HTTP seguro) na porta `443`. Teste inserindo o endereço IP ou nome de domínio totalmente qualificado da sua instância EC2 na barra de URL do navegador com o prefixo https://.
+
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
 
