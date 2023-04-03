@@ -2,7 +2,7 @@
 
 Neste projeto, iremos abordar o provisionamento de instâncias EC2 na Amazon AWS através de linhas de comando. Para o provisionamento de instâncias EC2, será disponibilizado um script. Adicionalmente, iremos montar um Network File System (NFS) utilizando o Amazon EFS (Elastic File System).
 
-Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. E ao final, verificaremos a disponibilidade das portas na instância e gerar um certificado SSL.
+Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. Ao final, iremos gerar um certificado SSL e configurar nosso Firewall.
 
 # AWS
 
@@ -138,6 +138,42 @@ Nmap done: 1 IP address (1 host up) scanned in 4.65 seconds
 > A porta 2049 está aberta pois é usada para o tráfego do protocolo NFS em redes TCP/IP. Quando o EFS solicita o acesso ao NFS ela é usada.
 
 Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o comando `df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou você possui um certificado SSL configurado no Apache
+
+## Configurando seu Firewall
+1. Verifique se o firewalld está instalado no seu sistema 
+
+`sudo yum list installed firewalld`
+
+> Se não estiver instalado, instale-o com o comando:
+`sudo yum install firewalld`
+
+2. Verifique o status do serviço firewalld:
+`sudo systemctl status firewalld`
+
+3. Se o serviço não estiver ativo, inicie-o:
+`sudo systemctl start firewalld`
+
+4. Permita o tráfego nas portas TCP e UDP especificadas:
+```
+sudo firewall-cmd --permanent --add-port=22/tcp
+sudo firewall-cmd --permanent --add-port=111/tcp
+sudo firewall-cmd --permanent --add-port=111/udp
+sudo firewall-cmd --permanent --add-port=2049/tcp
+sudo firewall-cmd --permanent --add-port=2049/udp
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+```
+
+Isso adiciona as configurações para permitir o tráfego nas portas especificadas ao firewall e a opção `--permanent` garante que a configuração persista através de reinicializações do sistema.
+
+5. Recarregue o firewall para que as alterações entrem em vigor:
+`sudo firewall-cmd --reload`
+
+6. Verifique se as configurações foram aplicadas corretamente:
+`sudo firewall-cmd --list-all`
+
+Isso deve exibir uma lista das regras atuais do firewall, que incluirá a configuração que você acabou de adicionar para permitir as portas especificadas.
+
 
 ## Certificado SSL
 
