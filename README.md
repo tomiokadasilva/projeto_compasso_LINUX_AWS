@@ -1,4 +1,6 @@
-#Projeto Compasso - Linux + AWS
+# Projeto Compasso - Linux + AWS
+
+Neste projeto, iremos abordar o provisionamento de instâncias EC2 na Amazon AWS através de linhas de comando. Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. Para o provisionamento de instâncias EC2, será disponibilizado um script. Adicionalmente, iremos montar um Network File System (NFS) utilizando o Amazon EFS (Elastic File System). E ao final, verificaremos a disponibilidade das portas na instância.
 
 ## Usando o Script de Provisionamento de Instancia EC2
 Através do uso da AWS CLI é possível automatizar a criação da instância executando um script. 
@@ -11,9 +13,9 @@ Região: `us-east-1`
 Familia: `t3.small`
 Volume: `SSD 16GB`
 ```
-Também, esse script irá anexar Alocar e anexar um IP elástico à instância, abrir portas de comunicação para acesso público, criar uma nova subnet, internet gateway e VPC.
+Também, esse script irá alocar e anexar um IP elástico à instância, criar uma nova subnet, internet gateway e VPC.
 
-Um novo grupo de segurança denominado `Compass Univesp Uri` é criado e regras são adicionadas para autorizar o tráfego nas portas `22, 80, 443, 111/TCP e UDP e 2049/TCP e UDP`. Um novo par de chaves denominado PB Compass Univesp também é criado para acesso à instância. Finalmente, tags são adicionadas à instância para identificar sua finalidade, centro de custo, projeto e tipo de recurso.
+Um novo grupo de segurança denominado também é criado e regras são adicionadas para autorizar o tráfego nas portas `22, 80, 443, 111/TCP e UDP e 2049/TCP e UDP`. Um novo par de chaves denominado também é criado para acesso à instância. Finalmente, tags são adicionadas à instância para identificar sua finalidade, centro de custo, projeto e tipo de recurso.
 
 ### Pre-requisitos.
 * AWS CLI instalado e configurado com as credenciais apropriadas.
