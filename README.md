@@ -45,9 +45,16 @@ Para executar o script, primeiro você deve realizar o download do script para s
 ## Montando um NFS com AWS EFS
 Para montar um sistema de arquivos NFS na sua instância EC2 AWS usando o EFS, siga os seguintes passos:
 
-1. Acesse o Console de Gerenciamento da AWS e Selecione o serviço Amazon EFS.
-2. Clique em `Criar sistema de arquivos` e Selecione as opções desejadas para configuração do EFS, incluindo a região da AWS onde será criado.
-3. Clique em `Criar sistema de arquivos`
+1. Através do seu terminal com AWS CLI configurado e credenciado, crie seu sistema de arquivos EFS através do comando
+
+`aws efs create-file-system --performance-mode generalPurpose --encrypted --creation-token myEFSCreationToken`
+
+2. Crie um ponto de montagem em cada sub-rede que você deseja usar para o seu EFS:
+
+`aws efs create-mount-target --file-system-id fs-12345678 --subnet-id subnet-12345678 --security-group sg-12345678`
+
+> Substitua os valores para file-system-id, subnet-id e security-group pelos IDs apropriados para sua VPC e grupo de segurança.
+
 
 Para montar o sistema de arquivos EFS em um servidor NFS por IP, siga os seguintes passos:
 
