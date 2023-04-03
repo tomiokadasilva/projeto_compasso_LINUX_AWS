@@ -1,4 +1,4 @@
-# Projeto Compasso - Linux + AWS
+# Projeto Estudo Compasso - Linux + AWS
 
 Neste projeto, iremos abordar o provisionamento de instâncias EC2 na Amazon AWS através de linhas de comando. Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. Para o provisionamento de instâncias EC2, será disponibilizado um script. Adicionalmente, iremos montar um Network File System (NFS) utilizando o Amazon EFS (Elastic File System). E ao final, verificaremos a disponibilidade das portas na instância.
 
@@ -36,8 +36,8 @@ Após a criação da instância, você pode testar se ela está disponível exec
 
 Para executar o script, primeiro você deve realizar o download do script para sua máquina local, torná-lo executável usando `chmod +x ec2_instance_test.sh` e depois executar o comandoScript `ec2_instance_test.sh.` para visualizar o teste em console
 
-## Criando um NFS com AWS EFS
-Para criar um sistema de arquivos EFS na AWS, siga os seguintes passos:
+## Montando um NFS com AWS EFS
+Para montar um sistema de arquivos NFS na sua instância EC2 AWS usando o EFS, siga os seguintes passos:
 
 1. Acesse o Console de Gerenciamento da AWS e Selecione o serviço Amazon EFS.
 2. Clique em `Criar sistema de arquivos` e Selecione as opções desejadas para configuração do EFS, incluindo a região da AWS onde será criado.
@@ -60,7 +60,7 @@ Para montar o sistema de arquivos EFS em um servidor NFS por IP, siga os seguint
 >6. Reinicie o servidor NFS com `sudo reboot` para testar se o EFS será montado automaticamente durante o boot.
 >7. Após esses passos, o sistema de arquivos EFS deverá ser montado automaticamente durante o boot do servidor NFS.
 
-## Monitoramento do servidor Apache
+## Servidor Apache
 
 1. Certifique-se de que o apache está instalado e executando no seu servidor `sudo systemctl status httpd`
 
