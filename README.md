@@ -116,11 +116,30 @@ PORT      STATE SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 4.65 seconds
 ```
-> A porta 22 está aberta pois o serviço openSSH está sendo usado para o acesso à instância
-> A porta 80 está aberta pois o serviço httpd (Apache) está sendo usado para servir arquivos no protocolo HTTP
-> A porta 111 está aberta pois ela é usada para Remote Procedure Call (RPC) no Network File system (NFS).
-> A porta 443 está aberta pois é usada pelo serviço httpd (Apache) para servir arquivos no protocolo HTTPS
+> A porta 22 está aberta pois o serviço openSSH está sendo usado para o acesso à instância \
+> A porta 80 está aberta pois o serviço httpd (Apache) está sendo usado para servir arquivos no protocolo HTTP \
+> A porta 111 está aberta pois ela é usada para Remote Procedure Call (RPC) no Network File system (NFS). \
+> A porta 443 está aberta pois é usada pelo serviço httpd (Apache) para servir arquivos no protocolo HTTPS \
 > A porta 2049 está aberta pois é usada para o tráfego do protocolo NFS em redes TCP/IP. Quando o EFS solicita o acesso ao NFS ela é usada.
+
+Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o `comando df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou a porta ao documento de configuração do apache `httpd.conf`
+
+Você pode acessar o arquivo de configuração do apache executando o comando
+
+`sudo nano /etc/httpd/conf/httpd.conf`
+
+Então, adicionar ao final do arquivo a linha
+
+`Listen 443`
+
+Salve e feche o arquivo
+
+Reinicie o apache  
+
+`sudo systemctl restart httpd`
+
+Execute novamente o comando `nmap` no seu IP para checar o status das portas.
+
 
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
