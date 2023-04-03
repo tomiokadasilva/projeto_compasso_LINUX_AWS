@@ -1,6 +1,12 @@
 # Projeto Estudo Compasso - Linux + AWS
 
-Neste projeto, iremos abordar o provisionamento de instâncias EC2 na Amazon AWS através de linhas de comando. Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. Para o provisionamento de instâncias EC2, será disponibilizado um script. Adicionalmente, iremos montar um Network File System (NFS) utilizando o Amazon EFS (Elastic File System). E ao final, verificaremos a disponibilidade das portas na instância.
+Neste projeto, iremos abordar o provisionamento de instâncias EC2 na Amazon AWS através de linhas de comando. Para o provisionamento de instâncias EC2, será disponibilizado um script. Adicionalmente, iremos montar um Network File System (NFS) utilizando o Amazon EFS (Elastic File System).
+
+Também, iremos configurar um servidor Apache dentro de nossa instância e monitorá-lo de forma periódica utilizando o cron. E ao final, verificaremos a disponibilidade das portas na instância e gerar um certificado SSL.
+
+# AWS
+
+Nessa primeira parte iremos explorar todas as configurações que serão realizadas na AWS e dentro de nossa instância. Na segunda parte, iremos explorar as configurações relacionadas ao Servidor Apache como bem suas configurações e scripts.
 
 ## Usando o Script de Provisionamento de Instancia EC2
 Através do uso da AWS CLI é possível automatizar a criação da instância executando um script. 
@@ -60,7 +66,7 @@ Para montar o sistema de arquivos EFS em um servidor NFS por IP, siga os seguint
 >6. Reinicie o servidor NFS com `sudo reboot` para testar se o EFS será montado automaticamente durante o boot.
 >7. Após esses passos, o sistema de arquivos EFS deverá ser montado automaticamente durante o boot do servidor NFS.
 
-## Servidor Apache
+# Servidor Apache
 
 1. Certifique-se de que o apache está instalado e executando no seu servidor `sudo systemctl status httpd`
 
@@ -124,24 +130,9 @@ Nmap done: 1 IP address (1 host up) scanned in 4.65 seconds
 > A porta 443 está aberta pois é usada pelo serviço httpd (Apache) para servir arquivos no protocolo HTTPS \
 > A porta 2049 está aberta pois é usada para o tráfego do protocolo NFS em redes TCP/IP. Quando o EFS solicita o acesso ao NFS ela é usada.
 
-Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o comando `df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou a porta ao documento de configuração do apache `httpd.conf`
+Caso a porta 2049 ou 111 não estejam abertas, certifique-se de que seu EFS esteja montado com o comando `df- h`. Caso a porta 443 não esteja aberta, certifique de que adicinou você possui um certificado SSL configurado no Apache
 
-Você pode acessar o arquivo de configuração do apache executando o comando
-
-`sudo nano /etc/httpd/conf/httpd.conf`
-
-Então, adicionar ao final do arquivo a linha
-
-`Listen 443`
-
-Salve e feche o arquivo
-
-Reinicie o apache  
-
-`sudo systemctl restart httpd`
-
-Execute novamente o comando `nmap` no seu IP para checar o status das portas.
-
+## Certificado SSL
 
 ### License
 This script is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
