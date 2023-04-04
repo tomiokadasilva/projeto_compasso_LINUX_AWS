@@ -36,7 +36,7 @@ aws ec2 create-route --route-table-id $ROUTE_TABLE_ID --destination-cidr-block 0
 # Associa sub-rede à tabela de rota
 aws ec2 associate-route-table --route-table-id $ROUTE_TABLE_ID --subnet-id $SUBNET_ID --region $REGION
 
-# cria grupo de segurança
+# cria grupo de segurança e cria regras inbound para grupo de segurança usando o comando authorize-security-group-ingress. Para criar outbound rules é usado o comando authorize-security-group-egress
 SECURITY_GROUP_ID=$(aws ec2 create-security-group --group-name "$SECURITY_GROUP_NAME" --description "Security group for Compass Univesp Uri" --vpc-id $VPC_ID --query 'GroupId' --output text --region $REGION)
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_GROUP_ID --protocol tcp --port 22 --cidr 0.0.0.0/0 --region $REGION
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_GROUP_ID --protocol tcp --port 80 --cidr 0.0.0.0/0 --region $REGION
